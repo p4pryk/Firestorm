@@ -2,6 +2,8 @@
 
 **Created by Patryk Skowron** | [https://github.com/p4pryk/Firestorm](https://github.com/p4pryk/Firestorm)
 
+![Firestorm Demo](demo.png)
+
 A comprehensive Web Application Firewall (WAF) testing tool designed for security professionals, penetration testers, and DevSecOps teams. Firestorm delivers an extensive collection of 733 payloads across 29 attack categories to validate WAF effectiveness and identify security gaps.
 
 ---
@@ -152,22 +154,50 @@ Block Rate = Blocked Payloads / (Blocked + Passed) × 100%
 
 ## Example Output
 
+```text
+================================================================================
+
+ ██╗    ██╗ █████╗ ███████╗    ████████╗███████╗███████╗████████╗███████╗██████╗ 
+ ██║    ██║██╔══██╗██╔════╝    ╚══██╔══╝██╔════╝██╔════╝╚══██╔══╝██╔════╝██╔══██╗
+ ██║ █╗ ██║███████║█████╗         ██║   █████╗  ███████╗   ██║   █████╗  ██████╔╝
+ ██║███╗██║██╔══██║██╔══╝         ██║   ██╔══╝  ╚════██║   ██║   ██╔══╝  ██╔══██╗
+ ╚███╔███╔╝██║  ██║██║            ██║   ███████╗███████║   ██║   ███████╗██║  ██║
+  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝            ╚═╝   ╚══════╝╚══════╝   ╚═╝   ╚══════╝╚═╝  ╚═╝
+
+            ███████╗██╗██████╗ ███████╗███████╗████████╗ ██████╗ ██████╗ ███╗   ███╗
+            ██╔════╝██║██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔═══██╗██╔══██╗████╗ ████║
+            █████╗  ██║██████╔╝█████╗  ███████╗   ██║   ██║   ██║██████╔╝██╔████╔██║
+            ██╔══╝  ██║██╔══██╗██╔══╝  ╚════██║   ██║   ██║   ██║██╔══██╗██║╚██╔╝██║
+            ██║     ██║██║  ██║███████╗███████║   ██║   ╚██████╔╝██║  ██║██║ ╚═╝ ██║
+            ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝
+    
+================================================================================
+  Advanced Web Application Firewall Security Testing Tool
+  Created by: Patryk Skowron (https://github.com/p4pryk/Firestorm)
+  Version: 2.0 | 733 Payloads | 29 Attack Categories
+================================================================================
+
+📋 TARGET INFORMATION
+================================================================================
+   Target URL:    http://example.com:80/
+   Total Payloads: 733
+   Categories:     29
+   Block Codes:    [401, 403, 406, 429]
+================================================================================
+
+[*] Starting WAF fingerprinting...
+
+================================================================================
+🛡️  WAF DETECTION PHASE
+================================================================================
+
+✅ WAF DETECTED: 2 system(s) identified
+   Confidence Level: HIGH
+
+   🔹 Cloudflare
+      → Matched: header:cf-ray
+      → Matched: body:cloudflare
 ```
-================================================================================
-WAF DETECTION PHASE
-================================================================================
-
-WAF DETECTED: 2 system(s) identified
-Confidence Level: HIGH
-
-  Cloudflare
-     Matched: header:cf-ray
-     Matched: header:cf-cache-status
-     Matched: body:cloudflare
-
-  ModSecurity
-     Matched: header:x-mod-security
-     Matched: body:mod_security
 
 ================================================================================
 
