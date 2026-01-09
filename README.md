@@ -18,6 +18,8 @@ A comprehensive Web Application Firewall (WAF) testing tool designed for securit
 - **Custom Block Detection**: Configure custom HTTP status codes for WAF block detection
 - **Detailed Reporting**: CSV export with full payload details, response codes, and vulnerability indicators
 - **Professional Output**: Clear categorization of blocked, passed, and error results
+- **Real-Time Progress**: Visual progress bars, live statistics, and color-coded results during testing
+- **Modern UI**: Beautiful ASCII frames, emoji indicators, and per-category summaries
 
 ---
 
@@ -101,6 +103,46 @@ python main.py --audit-payloads
 | `--no-csv` | Disable CSV report generation | false |
 | `--extra-payloads` | Path to extra payloads file (JSON/CSV/TXT). Can be provided multiple times | - |
 | `--audit-payloads` | Audit built-in payload list for duplicates/near-duplicates and exit | false |
+
+---
+
+## User Interface Features
+
+### Real-Time Testing Display
+
+Firestorm provides a modern, interactive testing experience:
+
+**Visual Progress Tracking**
+- Progress bars with visual block indicators (█ filled, ░ empty)
+- Real-time payload counter showing current/total tests
+- Elapsed time tracking for performance monitoring
+
+**Color-Coded Results**
+- 🟢 Green (🛡️): Blocked - WAF successfully stopped the attack
+- 🔴 Red (⚠️): Passed - Potential vulnerability detected!
+- 🟡 Yellow (❌): Error - Request failed (edge-case testing)
+- 🔵 Blue (⏭️): Skipped - Could not test (raw socket required)
+
+**Organized Layout**
+```text
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ [1/29] Testing: SQLI                                                         │
+│ Payloads: 60                                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+  [██████████████████░░░░░░░░░░░░░░] 45/60 | 🛡️ union_select_version | HTTP 403 (blocked)
+  ╰→ Summary: 🛡️ 42 blocked | ⚠️ 3 passed | ❌ 10 errors | ⏭️ 5 skipped
+```
+
+**Live Statistics**
+- Per-category summaries after each test batch
+- Running totals for all result types
+- Final comprehensive statistics with timing
+
+**Enhanced Readability**
+- ASCII box frames for visual organization
+- Emoji indicators for quick status recognition
+- Clean, scrolling updates in the same terminal line
+- Professional spacing and alignment
 
 ---
 
@@ -229,12 +271,42 @@ Some payloads may result in **ERROR** status. This is **expected behavior** for 
 
 ================================================================================
 
+🚀 PAYLOAD TESTING PHASE
+================================================================================
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ [1/29] Testing: SQLI                                                         │
+│ Payloads: 60                                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+  [████████████████████████████████] 60/60 | 🛡️ union_null_chain | HTTP 403 (blocked)
+  ╰→ Summary: 🛡️ 55 blocked | ⚠️ 2 passed | ❌ 3 errors | ⏭️ 0 skipped
+
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ [2/29] Testing: XSS                                                          │
+│ Payloads: 78                                                                 │
+└──────────────────────────────────────────────────────────────────────────────┘
+  [████████████████████████████████] 78/78 | 🛡️ slot_event | HTTP 403 (blocked)
+  ╰→ Summary: 🛡️ 73 blocked | ⚠️ 3 passed | ❌ 2 errors | ⏭️ 0 skipped
+
+[...]
+
+══════════════════════════════════════════════════════════════════════════════
+⏱️  TESTING COMPLETED
+══════════════════════════════════════════════════════════════════════════════
+  Time elapsed:   127.3s
+  Total tested:   733 payloads
+  🛡️  Blocked:     687
+  ⚠️  Passed:      28 ← POTENTIAL VULNERABILITIES!
+  ❌ Errors:      15
+  ⏭️  Skipped:     3
+══════════════════════════════════════════════════════════════════════════════
+
 ================================================================================
 OVERALL RESULT
 ================================================================================
   Total payloads:    733
   Blocked by WAF:    687 (WAF detected attack)
-  PASSED (2xx):      28  POTENTIAL VULNERABILITIES!
+  PASSED (2xx):      28 ⚠️  POTENTIAL VULNERABILITIES!
   Errors (4xx/5xx):  15 (request failed)
   Skipped:           3 (not testable)
 
@@ -347,6 +419,17 @@ This tool is provided for educational and authorized security testing purposes o
 ---
 
 ## Changelog
+
+### Version 2.1 (January 2026)
+- ✨ **NEW**: Real-time progress bars with visual block indicators
+- ✨ **NEW**: Live statistics tracking during testing
+- ✨ **NEW**: Color-coded result indicators (green/red/yellow/blue)
+- ✨ **NEW**: ASCII box frames for elegant category sections
+- ✨ **NEW**: Per-category summaries after each test batch
+- ✨ **NEW**: Final statistics box with elapsed time
+- 🎨 Enhanced visual feedback with emoji indicators
+- 🎨 Improved readability with better spacing and organization
+- ⚡ Same-line progress updates for cleaner output
 
 ### Version 2.0 (2025)
 - Added 733 comprehensive payloads (29 categories)
