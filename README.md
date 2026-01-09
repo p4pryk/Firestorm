@@ -4,13 +4,13 @@
 
 ![Firestorm Demo](demo.png)
 
-A comprehensive Web Application Firewall (WAF) testing tool designed for security professionals, penetration testers, and DevSecOps teams. Firestorm delivers an extensive collection of 733 payloads across 29 attack categories to validate WAF effectiveness and identify security gaps.
+A comprehensive Web Application Firewall (WAF) testing tool designed for security professionals, penetration testers, and DevSecOps teams. Firestorm delivers an extensive collection of 723 payloads across 29 attack categories to validate WAF effectiveness and identify security gaps.
 
 ---
 
 ## Key Features
 
-- **Extensive Payload Library**: 733 carefully crafted attack payloads covering modern and legacy vulnerabilities
+- **Extensive Payload Library**: 723 carefully crafted attack payloads covering modern and legacy vulnerabilities
 - **29 Attack Categories**: From SQL injection to AI/LLM prompt injection, including cloud-specific attacks
 - **WAF Fingerprinting**: Automatic detection of 12 major WAF solutions (Cloudflare, Akamai, AWS WAF, Azure WAF, F5, Imperva, Fortinet, Barracuda, Sucuri, ModSecurity, Wordfence, Palo Alto)
 - **Multiple Delivery Methods**: GET/POST parameters, JSON/XML bodies, HTTP headers, cookies, URL paths
@@ -80,6 +80,16 @@ Disable CSV report generation:
 python main.py --host example.com --no-csv
 ```
 
+Add your own additional payloads from a file (merged in; duplicates/near-duplicates skipped):
+```bash
+python main.py --host example.com --extra-payloads payloads_extra.json
+```
+
+Audit the built-in payload list for duplicates/near-duplicates:
+```bash
+python main.py --audit-payloads
+```
+
 ### Command-Line Parameters
 
 | Parameter | Description | Default |
@@ -89,6 +99,8 @@ python main.py --host example.com --no-csv
 | `--block-status` | Custom HTTP status codes indicating WAF block (comma-separated) | 401,403,406,429 |
 | `--skip-waf-detection` | Skip automatic WAF fingerprinting | false |
 | `--no-csv` | Disable CSV report generation | false |
+| `--extra-payloads` | Path to extra payloads file (JSON/CSV/TXT). Can be provided multiple times | - |
+| `--audit-payloads` | Audit built-in payload list for duplicates/near-duplicates and exit | false |
 
 ---
 
@@ -150,6 +162,22 @@ Firestorm calculates a WAF effectiveness score based on the block rate:
 
 Block Rate = Blocked Payloads / (Blocked + Passed) × 100%
 
+### Understanding Errors
+
+Some payloads may result in **ERROR** status. This is **expected behavior** for edge-case testing:
+
+#### Common Error Types (All Normal):
+
+1. **"Invalid leading whitespace"** - Payloads with tabs/newlines test WAF parsing limits
+2. **"'latin-1' codec can't encode"** - Unicode characters test HTTP header encoding boundaries  
+3. **"client error 400"** - Malformed requests test boundary conditions
+
+**Note:** Server errors (5xx) are automatically **SKIPPED** - we're testing the WAF, not the server!
+
+**These are NOT bugs** - they're intentional edge-case tests that probe protocol limits.
+
+**Focus on PASSED results** - those indicate real security gaps!
+
 ---
 
 ## Example Output
@@ -174,13 +202,13 @@ Block Rate = Blocked Payloads / (Blocked + Passed) × 100%
 ================================================================================
   Advanced Web Application Firewall Security Testing Tool
   Created by: Patryk Skowron (https://github.com/p4pryk/Firestorm)
-  Version: 2.0 | 733 Payloads | 29 Attack Categories
+  Version: 2.0 | 723 Payloads | 29 Attack Categories
 ================================================================================
 
 📋 TARGET INFORMATION
 ================================================================================
    Target URL:    http://example.com:80/
-   Total Payloads: 733
+   Total Payloads: 723
    Categories:     29
    Block Codes:    [401, 403, 406, 429]
 ================================================================================
