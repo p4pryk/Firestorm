@@ -1,0 +1,46 @@
+$ python main.py --url http://127.0.0.1:62773/boundary --pack boundaries --block-status 418 --interval 0.05 --csv examples/boundaries-results.csv --save-terminal docs/images/boundaries.svg
+╭─ FIRESTORM / 3.2.0 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│                                         ______________  _____________________  ____  __  ___                                     │
+│                                        / ____/  _/ __ \/ ____/ ___/_  __/ __ \/ __ \/  |/  /                                     │
+│                                       / /_   / // /_/ / __/  \__ \ / / / / / / /_/ / /|_/ /                                      │
+│                                      / __/ _/ // _, _/ /___ ___/ // / / /_/ / _, _/ /  / /                                       │
+│                                     /_/   /___/_/ |_/_____//____//_/  \____/_/ |_/_/  /_/                                        │
+│                                                                                                                                  │
+╰─ HTTP RESPONSE OBSERVATORY / AUTHORIZED LABS ────────────────────────────────────────────────────────────────────────────────────╯
+Endpoint http://127.0.0.1:62773/boundary
+Budget 100 · Interval 0.05s · Timeout 5s · Redirects off
+Neutral controls share the request budget. Every observation remains unconfirmed.
+
+Observing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 12/12 requests 0:00:00
+COMPLETED  /  12 requests  /  0.60s
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│  PROBE ROWS                      BLOCK SIGNALS                   SAME AS CONTROL                CONTROLS                         │
+│  8                               0                               0                              4                                │
+│                                                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                                                                                                    
+  PHASE / PROBE                           DELIVERY            HTTP       OBSERVATION                   BASELINE                     
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  control / neutral                       GET+Query           200        no_block_signal               neutral control              
+  delimiter_marker                        GET+Query           400        ambiguous                     different sample             
+  control / neutral                       POST+Form           200        no_block_signal               neutral control              
+  delimiter_marker                        POST+Form           400        ambiguous                     different sample             
+  control / neutral                       POST+JSON           200        no_block_signal               neutral control              
+  delimiter_marker                        POST+JSON           400        ambiguous                     different sample             
+  control / neutral                       POST+JSON           200        no_block_signal               neutral control              
+  json_null_marker                        POST+JSON           422        ambiguous                     different sample             
+  json_array_marker                       POST+JSON           422        ambiguous                     different sample             
+  bounded_length_marker                   GET+Query           413        ambiguous                     different sample             
+  bounded_length_marker                   POST+Form           413        ambiguous                     different sample             
+  bounded_length_marker                   POST+JSON           413        ambiguous                     different sample             
+                                                                                                                                    
+╭─ EVIDENCE BOUNDARY ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ UNCONFIRMED  HTTP status, denial text and baseline differences are observations.                                                 │
+│ Confirmed WAF blocks: not measured. Confirmed exploits: not measured.                                                            │
+│ No effectiveness score: HTTP observations cannot measure WAF strength.                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+CSV saved: examples/boundaries-results.csv
+
+Process exit code: 0 (expected 0)

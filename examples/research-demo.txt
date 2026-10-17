@@ -1,0 +1,60 @@
+$ python main.py --url http://127.0.0.1:62773/research --pack research --block-status 418 --interval 0.05 --csv examples/research-results.csv --save-terminal docs/images/research.svg
+╭─ FIRESTORM / 3.2.0 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│                                         ______________  _____________________  ____  __  ___                                     │
+│                                        / ____/  _/ __ \/ ____/ ___/_  __/ __ \/ __ \/  |/  /                                     │
+│                                       / /_   / // /_/ / __/  \__ \ / / / / / / /_/ / /|_/ /                                      │
+│                                      / __/ _/ // _, _/ /___ ___/ // / / /_/ / _, _/ /  / /                                       │
+│                                     /_/   /___/_/ |_/_____//____//_/  \____/_/ |_/_/  /_/                                        │
+│                                                                                                                                  │
+╰─ HTTP RESPONSE OBSERVATORY / AUTHORIZED LABS ────────────────────────────────────────────────────────────────────────────────────╯
+Endpoint http://127.0.0.1:62773/research
+Budget 100 · Interval 0.05s · Timeout 5s · Redirects off
+Neutral controls share the request budget. Every observation remains unconfirmed.
+
+Observing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 26/26 requests 0:00:01
+COMPLETED  /  26 requests  /  1.35s
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│  PROBE ROWS                      BLOCK SIGNALS                   SAME AS CONTROL                CONTROLS                         │
+│  18                              0                               0                              8                                │
+│                                                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                                                                                                    
+  PHASE / PROBE                                  DELIVERY          HTTP       OBSERVATION                BASELINE                   
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  control / neutral                              POST+JSON         200        no_block_signal            neutral control            
+  json_duplicate_marker_last                     POST+JSON         200        no_block_signal            different sample           
+  json_duplicate_marker_first                    POST+JSON         200        no_block_signal            different sample           
+  json_escaped_member_name                       POST+JSON         200        no_block_signal            different sample           
+  json_escaped_marker                            POST+JSON         200        no_block_signal            different sample           
+  json_nul_before_colon                          POST+JSON         422        ambiguous                  different sample           
+  json_trailing_comma                            POST+JSON         422        ambiguous                  different sample           
+  control / neutral                              POST+XML          200        no_block_signal            neutral control            
+  xml_cdata_marker                               POST+XML          200        no_block_signal            different sample           
+  xml_numeric_marker                             POST+XML          200        no_block_signal            different sample           
+  xml_comment_split_marker                       POST+XML          200        no_block_signal            different sample           
+  xml_namespace_marker                           POST+XML          200        no_block_signal            different sample           
+  control / neutral                              GET+Query         200        no_block_signal            neutral control            
+  hpp_marker_last                                GET+Query         200        no_block_signal            different sample           
+  control / neutral                              POST+Form         200        no_block_signal            neutral control            
+  hpp_marker_last                                POST+Form         200        no_block_signal            different sample           
+  hpp_marker_first                               GET+Query         200        no_block_signal            different sample           
+  hpp_marker_first                               POST+Form         200        no_block_signal            different sample           
+  control / neutral                              GET+Query         200        no_block_signal            neutral control            
+  hpp_scalar_array                               GET+Query         200        no_block_signal            different sample           
+  control / neutral                              POST+Form         200        no_block_signal            neutral control            
+  hpp_scalar_array                               POST+Form         200        no_block_signal            different sample           
+  control / neutral                              GET+Query         200        no_block_signal            neutral control            
+  hpp_three_values                               GET+Query         200        no_block_signal            different sample           
+  control / neutral                              POST+Form         200        no_block_signal            neutral control            
+  hpp_three_values                               POST+Form         200        no_block_signal            different sample           
+                                                                                                                                    
+╭─ EVIDENCE BOUNDARY ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ UNCONFIRMED  HTTP status, denial text and baseline differences are observations.                                                 │
+│ Confirmed WAF blocks: not measured. Confirmed exploits: not measured.                                                            │
+│ No effectiveness score: HTTP observations cannot measure WAF strength.                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+CSV saved: examples/research-results.csv
+
+Process exit code: 0 (expected 0)

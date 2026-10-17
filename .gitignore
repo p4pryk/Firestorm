@@ -36,11 +36,13 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Project specific
-*.csv
+# Local environments and generated reports
+.venv/
+.ruff_cache/
+.env
+.env.*
+.coverage
+firestorm-results.csv
+demo-results.csv
 waf_results_*.csv
-README_PL.md
-README_NEW.md
-prd.md
-analyze_headers.py
-run.sh
+!examples/demo-results.csv

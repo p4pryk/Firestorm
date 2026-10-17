@@ -1,0 +1,12 @@
+{
+  "fixture": [
+    {"name": "normal_response", "value": "ok"},
+    {"name": "ambiguous_denial", "value": "deny"},
+    {"name": "body_denial_signal", "value": "signal"},
+    {"name": "custom_status_signal", "value": "custom"},
+    {"name": "unfollowed_redirect", "value": "redirect"},
+    {"name": "server_error", "value": "error"},
+    {"name": "vendor_name_only", "value": "vendor"},
+    {"name": "rate_limit_stop", "value": "rate"}
+  ]
+}
