@@ -1,0 +1,60 @@
+$ python main.py --url http://127.0.0.1:62773/ --pack demo --block-status 418 --interval 0.05 --csv examples/demo-results.csv --save-terminal docs/images/terminal.svg
+╭─ FIRESTORM / 3.2.0 ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│                                         ______________  _____________________  ____  __  ___                                     │
+│                                        / ____/  _/ __ \/ ____/ ___/_  __/ __ \/ __ \/  |/  /                                     │
+│                                       / /_   / // /_/ / __/  \__ \ / / / / / / /_/ / /|_/ /                                      │
+│                                      / __/ _/ // _, _/ /___ ___/ // / / /_/ / _, _/ /  / /                                       │
+│                                     /_/   /___/_/ |_/_____//____//_/  \____/_/ |_/_/  /_/                                        │
+│                                                                                                                                  │
+╰─ HTTP RESPONSE OBSERVATORY / AUTHORIZED LABS ────────────────────────────────────────────────────────────────────────────────────╯
+Endpoint http://127.0.0.1:62773/
+Budget 100 · Interval 0.05s · Timeout 5s · Redirects off
+Neutral controls share the request budget. Every observation remains unconfirmed.
+
+Observing ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━     93% 25/27 requests 0:00:01
+RATE LIMITED  /  25 requests  /  1.30s
+Selected inputs or deliveries may remain untested.
+╭──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                                                                  │
+│  PROBE ROWS                      BLOCK SIGNALS                   SAME AS CONTROL                CONTROLS                         │
+│  22                              6                               3                              3                                │
+│                                                                                                                                  │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+                                                                                                                                    
+  PHASE / PROBE                          DELIVERY            HTTP        OBSERVATION                   BASELINE                     
+ ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────── 
+  control / neutral                      GET+Query           200         no_block_signal               neutral control              
+  normal_response                        GET+Query           200         no_block_signal               same sample                  
+  control / neutral                      POST+Form           200         no_block_signal               neutral control              
+  normal_response                        POST+Form           200         no_block_signal               same sample                  
+  control / neutral                      POST+JSON           200         no_block_signal               neutral control              
+  normal_response                        POST+JSON           200         no_block_signal               same sample                  
+  ambiguous_denial                       GET+Query           403         ambiguous                     different sample             
+  ambiguous_denial                       POST+Form           403         ambiguous                     different sample             
+  ambiguous_denial                       POST+JSON           403         ambiguous                     different sample             
+  body_denial_signal                     GET+Query           200         block_signal                  different sample             
+  body_denial_signal                     POST+Form           200         block_signal                  different sample             
+  body_denial_signal                     POST+JSON           200         block_signal                  different sample             
+  custom_status_signal                   GET+Query           418         block_signal                  different sample             
+  custom_status_signal                   POST+Form           418         block_signal                  different sample             
+  custom_status_signal                   POST+JSON           418         block_signal                  different sample             
+  unfollowed_redirect                    GET+Query           302         redirect                      different sample             
+  unfollowed_redirect                    POST+Form           302         redirect                      different sample             
+  unfollowed_redirect                    POST+JSON           302         redirect                      different sample             
+  server_error                           GET+Query           503         server_error                  different sample             
+  server_error                           POST+Form           503         server_error                  different sample             
+  server_error                           POST+JSON           503         server_error                  different sample             
+  vendor_name_only                       GET+Query           200         no_block_signal               different sample             
+  vendor_name_only                       POST+Form           200         no_block_signal               different sample             
+  vendor_name_only                       POST+JSON           200         no_block_signal               different sample             
+  rate_limit_stop                        GET+Query           429         rate_limited                  different sample             
+                                                                                                                                    
+╭─ EVIDENCE BOUNDARY ──────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ UNCONFIRMED  HTTP status, denial text and baseline differences are observations.                                                 │
+│ Confirmed WAF blocks: not measured. Confirmed exploits: not measured.                                                            │
+│ No effectiveness score: HTTP observations cannot measure WAF strength.                                                           │
+╰──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+CSV saved: examples/demo-results.csv
+
+Process exit code: 1 (expected 1)

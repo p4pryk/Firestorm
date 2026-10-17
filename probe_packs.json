@@ -1,0 +1,391 @@
+{
+  "reflection": {
+    "title": "Reflection markers",
+    "description": "Inert markers across query, form, JSON, cookie and header delivery.",
+    "probes": [
+      {
+        "name": "inert_markup_marker",
+        "value": "<firestorm-probe data-marker=\"fs-2026\">marker</firestorm-probe>",
+        "goal": "Compare an inert HTML-like marker with the neutral control.",
+        "side_effects": "May be reflected or logged; no script or callback.",
+        "scenario": "marker"
+      },
+      {
+        "name": "template_literal_marker",
+        "value": "firestorm-${7*7}-{{7*7}}",
+        "goal": "Observe a template-like marker; expansion is not inferred from HTTP status.",
+        "side_effects": "May be reflected or interpreted by a template handler in the lab.",
+        "scenario": "marker"
+      },
+      {
+        "name": "cookie_marker",
+        "method": "cookie",
+        "value": "firestorm-probe-marker",
+        "goal": "Exercise cookie delivery without session impersonation.",
+        "side_effects": "May replace a lab cookie for this request only.",
+        "scenario": "marker"
+      },
+      {
+        "name": "header_marker",
+        "header_name": "X-Firestorm-Probe",
+        "value": "firestorm-probe-marker",
+        "goal": "Observe a dedicated lab header.",
+        "side_effects": "May be logged; no forwarding or authentication override.",
+        "scenario": "marker"
+      }
+    ]
+  },
+  "normalization": {
+    "title": "Encoding & normalization",
+    "description": "Compare percent encodings and Unicode forms without external callbacks.",
+    "probes": [
+      {
+        "name": "literal_percent_quote",
+        "value": "firestorm-%27-marker",
+        "goal": "Observe one percent-encoded quote as input; transport encodes it again.",
+        "side_effects": "May be decoded and logged by the application.",
+        "scenario": "normalization"
+      },
+      {
+        "name": "double_percent_quote",
+        "value": "firestorm-%2527-marker",
+        "goal": "Compare a second encoding layer with a single-layer marker.",
+        "side_effects": "May be decoded and logged by the application.",
+        "scenario": "normalization"
+      },
+      {
+        "name": "unicode_composed",
+        "value": "firestorm-café-marker",
+        "goal": "Observe the NFC form of an accented marker.",
+        "side_effects": "May be normalized or logged.",
+        "scenario": "normalization"
+      },
+      {
+        "name": "unicode_decomposed",
+        "value": "firestorm-café-marker",
+        "goal": "Observe the canonically equivalent NFD form; compare manually with NFC.",
+        "side_effects": "May be normalized or logged.",
+        "scenario": "normalization"
+      }
+    ]
+  },
+  "boundaries": {
+    "title": "Input boundaries",
+    "description": "Small bounded inputs for escaping and JSON scalar/container handling.",
+    "probes": [
+      {
+        "name": "delimiter_marker",
+        "value": "firestorm-'\"`<>;&-marker",
+        "goal": "Observe delimiter handling without executing a command or query.",
+        "side_effects": "May trigger application validation or filtering.",
+        "scenario": "boundary"
+      },
+      {
+        "name": "json_null_marker",
+        "content_type": "json",
+        "value": "{\"probe\":null,\"marker\":\"firestorm-probe\"}",
+        "goal": "Compare a null value with a neutral object.",
+        "side_effects": "May trigger lab input validation; no mutation directive.",
+        "scenario": "boundary"
+      },
+      {
+        "name": "json_array_marker",
+        "content_type": "json",
+        "value": "{\"probe\":[\"firestorm-probe\",1]}",
+        "goal": "Observe a small array where a scalar might be expected.",
+        "side_effects": "May trigger lab input validation; two elements only.",
+        "scenario": "boundary"
+      },
+      {
+        "name": "bounded_length_marker",
+        "value": "firestorm-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA-marker",
+        "goal": "Observe a 273-character bounded marker.",
+        "side_effects": "Slightly larger log entry; no repetition or flood.",
+        "scenario": "boundary"
+      }
+    ]
+  },
+  "demo": {
+    "title": "Fixture response map",
+    "description": "Eight deterministic response cases, including redirects, server errors and a 429 stop.",
+    "probes": [
+      {
+        "name": "normal_response",
+        "value": "ok",
+        "goal": "Observe the controlled ok fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "ok"
+      },
+      {
+        "name": "ambiguous_denial",
+        "value": "deny",
+        "goal": "Observe the controlled deny fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "deny"
+      },
+      {
+        "name": "body_denial_signal",
+        "value": "signal",
+        "goal": "Observe the controlled signal fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "signal"
+      },
+      {
+        "name": "custom_status_signal",
+        "value": "custom",
+        "goal": "Observe the controlled custom fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "custom"
+      },
+      {
+        "name": "unfollowed_redirect",
+        "value": "redirect",
+        "goal": "Observe the controlled redirect fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "redirect"
+      },
+      {
+        "name": "server_error",
+        "value": "error",
+        "goal": "Observe the controlled error fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "error"
+      },
+      {
+        "name": "vendor_name_only",
+        "value": "vendor",
+        "goal": "Observe the controlled vendor fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "vendor"
+      },
+      {
+        "name": "rate_limit_stop",
+        "value": "rate",
+        "goal": "Observe the controlled rate fixture response.",
+        "side_effects": "Canned fixture response; no payload is evaluated.",
+        "scenario": "rate"
+      }
+    ]
+  },
+  "json_parsing": {
+    "title": "JSON parser discrepancies",
+    "description": "Duplicate keys, Unicode escapes and two deliberately invalid JSON inputs.",
+    "research": true,
+    "probes": [
+      {
+        "name": "json_duplicate_marker_last",
+        "value": "{\"probe\":\"firestorm-control\",\"probe\":\"firestorm-marker\"}",
+        "goal": "Observe conflicting duplicate members with the marker last; parser selection is not inferred from status.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      },
+      {
+        "name": "json_duplicate_marker_first",
+        "value": "{\"probe\":\"firestorm-marker\",\"probe\":\"firestorm-control\"}",
+        "goal": "Reverse duplicate member order to expose first/last/all-member handling in the lab.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      },
+      {
+        "name": "json_escaped_member_name",
+        "value": "{\"pr\\u006fbe\":\"firestorm-marker\"}",
+        "goal": "Observe an escaped member name that decodes to probe.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      },
+      {
+        "name": "json_escaped_marker",
+        "value": "{\"probe\":\"\\u0066\\u0069\\u0072\\u0065\\u0073\\u0074\\u006f\\u0072\\u006d-marker\"}",
+        "goal": "Observe an escaped string that decodes to the same literal marker.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      },
+      {
+        "name": "json_nul_before_colon",
+        "value": "{\"probe\"\u0000:\"firestorm-marker\"}",
+        "goal": "Observe rejection of a literal NUL between a member name and colon; inspired by the WAFFLED field-wrapper mutation class.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://arxiv.org/html/2503.10846v2",
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      },
+      {
+        "name": "json_trailing_comma",
+        "value": "{\"probe\":\"firestorm-marker\",}",
+        "goal": "Observe a deliberately invalid trailing comma; a permissive parser may behave differently.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "json-parser",
+        "sources": [
+          "https://www.rfc-editor.org/rfc/rfc8259.html"
+        ],
+        "content_type": "json"
+      }
+    ]
+  },
+  "xml_parsing": {
+    "title": "XML text representations",
+    "description": "CDATA, character references, comments and a namespaced element; no DTD or entities.",
+    "research": true,
+    "probes": [
+      {
+        "name": "xml_cdata_marker",
+        "value": "<probe><![CDATA[firestorm-marker]]></probe>",
+        "goal": "Observe text carried inside CDATA without using external entities.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "xml-parser",
+        "sources": [
+          "https://arxiv.org/html/2503.10846v2",
+          "https://www.w3.org/TR/xml/"
+        ],
+        "content_type": "xml"
+      },
+      {
+        "name": "xml_numeric_marker",
+        "value": "<probe>&#102;irestorm&#45;marker</probe>",
+        "goal": "Compare numeric character references with literal marker text.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "xml-parser",
+        "sources": [
+          "https://www.w3.org/TR/xml/"
+        ],
+        "content_type": "xml"
+      },
+      {
+        "name": "xml_comment_split_marker",
+        "value": "<probe>fire<!--marker split-->storm-marker</probe>",
+        "goal": "Observe text segments separated by an XML comment.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "xml-parser",
+        "sources": [
+          "https://www.w3.org/TR/xml/"
+        ],
+        "content_type": "xml"
+      },
+      {
+        "name": "xml_namespace_marker",
+        "value": "<fs:probe xmlns:fs=\"urn:firestorm\">firestorm-marker</fs:probe>",
+        "goal": "Observe a namespace-qualified element without changing the target URL.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "xml-parser",
+        "sources": [
+          "https://www.w3.org/TR/xml-names/"
+        ],
+        "content_type": "xml"
+      }
+    ]
+  },
+  "parameter_pollution": {
+    "title": "Repeated HTTP parameters",
+    "description": "Ordered repeated query/form fields and scalar/array-name ambiguity.",
+    "research": true,
+    "probes": [
+      {
+        "name": "hpp_marker_last",
+        "value": "q=firestorm-control&q=firestorm-marker",
+        "goal": "Observe two ordered q fields with the marker last.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "parameters",
+        "sources": [
+          "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution/"
+        ],
+        "method": "parameters",
+        "parameters": [
+          [
+            "q",
+            "firestorm-control"
+          ],
+          [
+            "q",
+            "firestorm-marker"
+          ]
+        ]
+      },
+      {
+        "name": "hpp_marker_first",
+        "value": "q=firestorm-marker&q=firestorm-control",
+        "goal": "Reverse the same q values to expose order-sensitive parsing.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "parameters",
+        "sources": [
+          "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution/"
+        ],
+        "method": "parameters",
+        "parameters": [
+          [
+            "q",
+            "firestorm-marker"
+          ],
+          [
+            "q",
+            "firestorm-control"
+          ]
+        ]
+      },
+      {
+        "name": "hpp_scalar_array",
+        "value": "q=firestorm-marker&q%5B%5D=firestorm-array",
+        "goal": "Observe scalar and bracketed-array field names without assuming a specific framework.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "parameters",
+        "sources": [
+          "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution/"
+        ],
+        "method": "parameters",
+        "parameters": [
+          [
+            "q",
+            "firestorm-marker"
+          ],
+          [
+            "q[]",
+            "firestorm-array"
+          ]
+        ]
+      },
+      {
+        "name": "hpp_three_values",
+        "value": "q=firestorm-a&q=firestorm-b&q=firestorm-c",
+        "goal": "Observe a bounded three-value parameter list rather than a single embedded query string.",
+        "side_effects": "May be reflected, logged or rejected by input validation. No callback or executable command is included.",
+        "scenario": "parameters",
+        "sources": [
+          "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution/"
+        ],
+        "method": "parameters",
+        "parameters": [
+          [
+            "q",
+            "firestorm-a"
+          ],
+          [
+            "q",
+            "firestorm-b"
+          ],
+          [
+            "q",
+            "firestorm-c"
+          ]
+        ]
+      }
+    ]
+  }
+}

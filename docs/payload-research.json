@@ -1,0 +1,82 @@
+{
+  "reviewed_on": "2026-10-17",
+  "version": "3.2.0",
+  "scope": "Original bounded parser markers. Local fixture observations only; no WAF bypass validation.",
+  "sources": [
+    {
+      "id": "waffled-2025",
+      "url": "https://arxiv.org/html/2503.10846v2",
+      "title": "WAFFLED: Exploiting Parsing Discrepancies to Bypass Web Application Firewalls",
+      "publication_year": 2025,
+      "applied_to": [
+        "json_nul_before_colon",
+        "xml_cdata_marker"
+      ],
+      "basis": "Request-body parsing discrepancies and the literal-NUL field-wrapper mutation class. No published attack dataset is imported."
+    },
+    {
+      "id": "rfc8259",
+      "url": "https://www.rfc-editor.org/rfc/rfc8259.html",
+      "title": "RFC 8259: JSON",
+      "applied_to": [
+        "json_parsing"
+      ],
+      "basis": "Object member uniqueness, Unicode escapes and JSON grammar. Invalid inputs are labeled deliberately malformed."
+    },
+    {
+      "id": "xml10",
+      "url": "https://www.w3.org/TR/xml/",
+      "title": "XML 1.0, Fifth Edition",
+      "applied_to": [
+        "xml_parsing"
+      ],
+      "basis": "Character references, CDATA and comments as alternate text representations."
+    },
+    {
+      "id": "xml-namespaces",
+      "url": "https://www.w3.org/TR/xml-names/",
+      "title": "Namespaces in XML 1.0, Third Edition",
+      "applied_to": [
+        "xml_namespace_marker"
+      ],
+      "basis": "Namespace-qualified element names."
+    },
+    {
+      "id": "owasp-hpp",
+      "url": "https://wstg.owasp.org/v4.2/4-Web_Application_Security_Testing/07-Input_Validation_Testing/04-Testing_for_HTTP_Parameter_Pollution/",
+      "title": "OWASP WSTG: Testing for HTTP Parameter Pollution",
+      "applied_to": [
+        "parameter_pollution"
+      ],
+      "basis": "Repeated parameter values and order-sensitive interpretation. Fixture preserves all pairs without emulating a specific production framework."
+    }
+  ],
+  "excluded": [
+    {
+      "technique": "Raw HTTP desynchronization",
+      "reason": "Requires wire-level framing and changes Firestorm scope."
+    },
+    {
+      "technique": "Shared-cache poisoning or deception",
+      "reason": "Requires cache-specific state and isolation beyond the current fixture."
+    },
+    {
+      "technique": "External-entity expansion and callback payloads",
+      "reason": "Not needed for the selected text-representation probes; fixture disables DTD/entity declarations."
+    }
+  ],
+  "validation": {
+    "local_routes": [
+      "/json-parser",
+      "/xml-parser",
+      "/parameters",
+      "/research"
+    ],
+    "new_inputs": 14,
+    "research_requests_with_controls": 26,
+    "core_inputs": 26,
+    "core_requests_with_controls": 59,
+    "confirmed_waf_blocks": "not measured",
+    "confirmed_exploits": "not measured"
+  }
+}

@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Generated local Python environment, bytecode and VCS objects"
+paths = ['''(^|/)\.venv/''', '''(^|/)__pycache__/''', '''(^|/)\.git/''']
